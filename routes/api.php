@@ -75,5 +75,5 @@ Route::group([
     | Worktime entry End Points
     |--------------------------------------------------------------------------
     */
-    Route::resource('worktime-entries', WorktimeEntriesController::class)->only(['index', 'show', 'store', 'update']);
+    Route::resource('worktime-entries', WorktimeEntriesController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
 });
