@@ -4,6 +4,7 @@ namespace App\Rules\worktimeentries;
 
 use App\Models\WorktimeEntry;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class DateRule implements Rule
@@ -44,11 +45,11 @@ class DateRule implements Rule
 
         if ($attribute == 'started_at') {
             $collidingEntry = $this->getQueryForStartedAtAttributeValidation(
-                $value,
+                Carbon::parse($value),
                 $collidingEntry);
         } else {
             $collidingEntry = $this->getQueryForEndedAtAttributeValidation(
-                $value,
+                Carbon::parse($value),
                 $collidingEntry);
         }
         if (! empty($collidingEntry->first())) {

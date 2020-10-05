@@ -18,10 +18,10 @@ class WorktimeEntryResource extends JsonResource
         return [
             "id" => $this->id,
             "project_id" => $this->project_id,
-            "started_at" => Carbon::parse($this->started_at)->format('Y-m-d\TH:i:s'),
-            "ended_at" => Carbon::parse($this->ended_at)->format('Y-m-d\TH:i:s'),
-            "created_at" => Carbon::parse($this->created_at)->format('Y-m-d\TH:i:s'),
-            "updated_at" => Carbon::parse($this->updated_at)->format('Y-m-d\TH:i:s'),
+            "started_at" => Carbon::parse($this->started_at)->toIso8601String(),
+            "ended_at" => Carbon::parse($this->ended_at)->toIso8601String(),
+            "created_at" => Carbon::parse($this->created_at)->toIso8601String(),
+            "updated_at" => Carbon::parse($this->updated_at)->toIso8601String(),
         ];
     }
 }

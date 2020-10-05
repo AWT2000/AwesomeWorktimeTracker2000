@@ -22,8 +22,8 @@ Returns:
         "id": 8,
         "name": "Miss Katlyn Spinka",
         "email": "user@example.net",
-        "created_at": "2020-01-01T00:00:00",
-        "updated_at": "2020-01-01T00:00:00"
+        "created_at": "2020-09-22T14:54:21+00:00",
+        "updated_at": "2020-09-22T14:54:21+00:00"
     },
     "access_token":"access.token"
 }
@@ -49,10 +49,10 @@ if authentication header is not specified OR invalid token is passed
 
 ### GET /
 
-Optional query parameters: started_at, ended_at  
-e.g. `?started_at=2020-01-01&ended_at=2020-01-02`  
-validation rule: must be in 'Y-m-d' format  
-defaults: started_at now, ended_at 14 days ago  
+Optional query parameters: started_at, ended_at
+e.g. `?started_at=2020-01-01&ended_at=2020-01-02`
+validation rule: must be in 'Y-m-d' format
+defaults: started_at now, ended_at 14 days ago
 
 Returns array of work time entries:
 ```
@@ -61,18 +61,18 @@ Returns array of work time entries:
         {
             "id": 13,
             "project_id": 5,
-            "started_at": "2020-09-14T11:37:25",
-            "ended_at": "2020-09-14T12:59:03",
-            "created_at": "2020-09-14T17:27:49",
-            "updated_at": "2020-09-14T17:27:49"
+            "started_at": "2020-10-05T21:23:25+00:00",
+            "ended_at": "2020-10-05T21:28:46+00:00",
+            "created_at": "2020-09-22T14:54:21+00:00",
+            "updated_at": "2020-09-22T14:54:21+00:00"
         },
         {
             "id": 14,
             "project_id": 5,
-            "started_at": "2020-09-13T11:29:00",
-            "ended_at": "2020-09-13T16:32:19",
-            "created_at": "2020-09-14T17:27:49",
-            "updated_at": "2020-09-14T17:27:49"
+            "started_at": "2020-10-05T21:23:25+00:00",
+            "ended_at": "2020-10-05T21:28:46+00:00",
+            "created_at": "2020-09-22T14:54:21+00:00",
+            "updated_at": "2020-09-22T14:54:21+00:00"
         }
     ]
 }
@@ -80,12 +80,12 @@ Returns array of work time entries:
 
 ### POST /
 
-Parameters:
+Body:
 ```
 {
     "project_id": 5, [optional]
-    "started_at": "2020-01-01T16:00:00", [required]
-    "ended_at": "2020-01-01T17:00:00" [optional]
+    "started_at": "2020-10-05T21:23:25+00:00", [required]
+    "ended_at": "2020-10-05T21:28:46+00:00" [optional]
 }
 ```
 Returns created work time entry:
@@ -93,10 +93,10 @@ Returns created work time entry:
 {
     "id": 55,
     "project_id": 5,
-    "started_at": "2020-01-01T16:00:00",
-    "ended_at": "2020-01-01T17:00:00",
-    "created_at": "2020-09-21T13:41:20",
-    "updated_at": "2020-09-21T13:41:20"
+    "started_at": "2020-10-05T21:23:25+00:00",
+    "ended_at": "2020-10-05T21:28:46+00:00",
+    "created_at": "2020-09-22T14:54:21+00:00",
+    "updated_at": "2020-09-22T14:54:21+00:00"
 }
 ```
 
@@ -107,10 +107,10 @@ Returns:
 {
     "id": 13,
     "project_id": 5,
-    "started_at": "2020-09-14T11:37:25",
-    "ended_at": "2020-09-14T12:59:03",
-    "created_at": "2020-09-14T17:27:49",
-    "updated_at": "2020-09-14T17:27:49"
+    "started_at": "2020-10-05T21:23:25+00:00",
+    "ended_at": "2020-10-05T21:28:46+00:00",
+    "created_at": "2020-09-22T14:54:21+00:00",
+    "updated_at": "2020-09-22T14:54:21+00:00"
 }
 ```
 OR
@@ -119,6 +119,29 @@ OR
     "message": "Not Found."
 }
 ```
+### PUT /{id}
+Body:
+```
+{
+    "project_id": 5, [optional]
+    "started_at": "2020-10-05T21:23:25+00:00", [required]
+    "ended_at": "2020-10-05T21:28:46+00:00" [optional]
+}
+```
+Returns updated work time entry:
+```
+{
+    "id": 55,
+    "project_id": 5,
+    "started_at": "2020-10-05T21:23:25+00:00",
+    "ended_at": "2020-10-05T21:28:46+00:00",
+    "created_at": "2020-09-22T14:54:21+00:00",
+    "updated_at": "2020-09-22T14:54:21+00:00"
+}
+```
+### DELETE /{id}
+Returns:
+200 if ok and 404 if not found
 
 ## /api/v1/projects
 
@@ -137,8 +160,8 @@ Returns array of projects:
             "name": "Miss Katlyn Spinka",
             "email": "pstehr@example.net"
         },
-        "created_at": "2020-09-14T17:27:49",
-        "updated_at": "2020-09-14T17:27:49",
+        "created_at": "2020-09-22T14:54:21+00:00",
+        "updated_at": "2020-09-22T14:54:21+00:00"
         "is_personal": true
     },
     {
@@ -152,8 +175,8 @@ Returns array of projects:
             "name": "Miss Verlie Kozey",
             "email": "mjohnston@example.org"
         },
-        "created_at": "2020-09-14T17:27:49",
-        "updated_at": "2020-09-14T17:27:49",
+        "created_at": "2020-09-22T14:54:21+00:00",
+        "updated_at": "2020-09-22T14:54:21+00:00"
         "is_personal": false
     }
 ]
