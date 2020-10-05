@@ -30,11 +30,11 @@ class SaveWorktimeEntryRequest extends FormRequest
         $rules = [
             'started_at' => [
                 'date_format:Y-m-d\TH:i:s',
-                new DateRule
+                new DateRule($this->id)
             ],
             'ended_at' => [
                 'date_format:Y-m-d\TH:i:s',
-                new DateRule
+                new DateRule($this->id)
             ],
             'project_id' => [
                 'nullable',
@@ -72,13 +72,39 @@ class SaveWorktimeEntryRequest extends FormRequest
                     ['user_id', Auth::user()->id],
                     ['started_at', '>=', $this->started_at],
                     ['ended_at', '<=', $this->ended_at]
-                ])->first();
+                ]);
+
+                if ($this->id) {
+                    $entryBetweenDates->where('id', '<>', $this->id);
+                }
+                $entryBetweenDates = $entryBetweenDates->first();
 
                 if (!empty($entryBetweenDates)) {
-                    $validator->errors()->add('started_at', 'started_at must not collide with other worktime entries.');
-                    $validator->errors()->add('ended_at', 'ended_at must not collide with other worktime entries.');
+                    if (!$validator->errors()->first('started_at')) {
+                        $validator->errors()->add('started_at', 'started_at must not collide with other worktime entries.');
+                    }
+                    if (!$validator->errors()->first('ended_at')) {
+                        $validator->errors()->add('ended_at', 'ended_at must not collide with other worktime entries.');
+                    }
                 }
             }
         });
+    }
+
+    /**
+     * Get all of the input and files for the request.
+     *
+     * @param  array|mixed|null  $keys
+     * @return array
+     */
+    public function all($keys = null)
+    {
+        $data = parent::all($keys);
+
+        if (in_array($this->method(), ['PUT', 'PATCH'])) {
+            $data['id'] = $this->route('worktime_entry');
+        }
+
+        return $data;
     }
 }

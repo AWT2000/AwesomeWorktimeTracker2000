@@ -7,7 +7,6 @@ use App\Http\Requests\api\v1\worktimeentries\GetWorktimeEntriesRequest;
 use App\Http\Requests\api\v1\worktimeentries\SaveWorktimeEntryRequest;
 use App\Http\Resources\api\v1\worktimeentries\WorktimeEntryResource;
 use App\Models\WorktimeEntry;
-use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -84,9 +83,8 @@ class WorktimeEntriesController extends Controller
     {
         $worktimeEntry = WorktimeEntry::find($id);
 
-        if (empty($worktimeEntry)
-            || $worktimeEntry->user_id != Auth::user()->id
-            || Auth::user()->hasRole('admin'))
+        if ((empty($worktimeEntry) || $worktimeEntry->user_id != Auth::user()->id)
+            && !Auth::user()->hasRole('admin'))
         {
             return response()->json(['message' => 'Not Found.'], 404);
         }
@@ -96,13 +94,28 @@ class WorktimeEntriesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\api\v1\worktimeentries\SaveWorktimeEntryRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SaveWorktimeEntryRequest $request, $id)
     {
-        //
+        $worktimeEntry = WorktimeEntry::find($id);
+
+        if ((empty($worktimeEntry) || $worktimeEntry->user_id != Auth::user()->id)
+            && !Auth::user()->hasRole('admin'))
+        {
+            return response()->json(['message' => 'Not Found.'], 404);
+        }
+
+        $worktimeEntry->forceFill(array_merge(
+            $request->validated(),
+            ['user_id' => Auth::user()->id]
+        ));
+
+        $worktimeEntry->save();
+
+        return response(WorktimeEntryResource::make($worktimeEntry));
     }
 
     /**
@@ -113,6 +126,16 @@ class WorktimeEntriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $worktimeEntry = WorktimeEntry::find($id);
+
+        if ((empty($worktimeEntry) || $worktimeEntry->user_id != Auth::user()->id)
+            && !Auth::user()->hasRole('admin'))
+        {
+            return response()->json(['message' => 'Not Found.'], 404);
+        }
+
+        $worktimeEntry->delete();
+
+        return response()->json();
     }
 }
