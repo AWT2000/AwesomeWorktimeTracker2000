@@ -67,7 +67,11 @@ class WorktimeEntriesController extends Controller
 
         $worktimeEntry = WorktimeEntry::create(array_merge(
             $request->validated(),
-            ['user_id' => $user->id]
+            [
+                'user_id' => $user->id,
+                'started_at' => Carbon::parse($request->validated()['started_at']),
+                'ended_at' => Carbon::parse($request->validated()['ended_at'])
+            ]
         ));
 
         return response(WorktimeEntryResource::make($worktimeEntry));
@@ -110,7 +114,11 @@ class WorktimeEntriesController extends Controller
 
         $worktimeEntry->forceFill(array_merge(
             $request->validated(),
-            ['user_id' => Auth::user()->id]
+            [
+                'user_id' => Auth::user()->id,
+                'started_at' => Carbon::parse($request->validated()['started_at']),
+                'ended_at' => Carbon::parse($request->validated()['ended_at'])
+            ]
         ));
 
         $worktimeEntry->save();

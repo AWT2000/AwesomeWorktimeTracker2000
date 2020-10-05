@@ -27,8 +27,8 @@ class ProjectResource extends JsonResource
                 'name' => $this->projectManager->name,
                 'email' => $this->projectManager->email
             ],
-            'created_at' => Carbon::parse($this->created_at)->format('Y-m-d\TH:i:s'),
-            'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d\TH:i:s'),
+            'created_at' => Carbon::parse($this->created_at)->toIso8601String(),
+            'updated_at' => Carbon::parse($this->updated_at)->toIso8601String(),
         ];
 
         if (!Auth::user()->hasRole('admin')) {

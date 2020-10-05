@@ -6,6 +6,7 @@ use App\Models\WorktimeEntry;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Rules\worktimeentries\DateRule;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class SaveWorktimeEntryRequest extends FormRequest
@@ -29,11 +30,11 @@ class SaveWorktimeEntryRequest extends FormRequest
     {
         $rules = [
             'started_at' => [
-                'date_format:Y-m-d\TH:i:s',
+                'date_format:Y-m-d\TH:i:sP',
                 new DateRule($this->id)
             ],
             'ended_at' => [
-                'date_format:Y-m-d\TH:i:s',
+                'date_format:Y-m-d\TH:i:sP',
                 new DateRule($this->id)
             ],
             'project_id' => [
@@ -70,8 +71,8 @@ class SaveWorktimeEntryRequest extends FormRequest
             if ($this->started_at && $this->ended_at) {
                 $entryBetweenDates = WorktimeEntry::where([
                     ['user_id', Auth::user()->id],
-                    ['started_at', '>=', $this->started_at],
-                    ['ended_at', '<=', $this->ended_at]
+                    ['started_at', '>=', Carbon::parse($this->started_at)],
+                    ['ended_at', '<=', Carbon::parse($this->ended_at)]
                 ]);
 
                 if ($this->id) {
