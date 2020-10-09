@@ -4,9 +4,10 @@ namespace App\Http\Controllers\api\v1\projects;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
-use App\Http\Resources\api\v1\projects\ProjectResource;
+use App\Http\Resources\projects\ProjectResource;
 use Illuminate\Http\Request;
 use App\Http\Requests\api\v1\projects\GetProjectsRequest;
+use App\Http\Resources\projects\ProjectCollection;
 
 class ProjectsController extends Controller
 {
@@ -48,7 +49,7 @@ class ProjectsController extends Controller
             });
         }
 
-        return response(ProjectResource::collection($projects));
+        return new ProjectCollection($projects);
     }
 
     public function show(Project $project)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\api\v1\worktimeentries;
+namespace App\Http\Resources\worktimeentries;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;

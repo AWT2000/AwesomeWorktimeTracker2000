@@ -5,7 +5,8 @@ namespace App\Http\Controllers\api\v1\worktimeentries;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\v1\worktimeentries\GetWorktimeEntriesRequest;
 use App\Http\Requests\api\v1\worktimeentries\SaveWorktimeEntryRequest;
-use App\Http\Resources\api\v1\worktimeentries\WorktimeEntryResource;
+use App\Http\Resources\worktimeentries\WorktimeEntryCollection;
+use App\Http\Resources\worktimeentries\WorktimeEntryResource;
 use App\Models\WorktimeEntry;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -25,14 +26,6 @@ class WorktimeEntriesController extends Controller
         $startedAt = $request->query('started_at', $request->started_at);
         $endedAt = $request->query('ended_at', $request->ended_at);
 
-        $startedAt = $startedAt
-            ? Carbon::createFromFormat('Y-m-d', $startedAt)->startOfDay()
-            : Carbon::now()->addDays(-14);
-
-        $endedAt = $endedAt
-            ? Carbon::createFromFormat('Y-m-d', $endedAt)->endOfDay()
-            : Carbon::now();
-
         if ($user->hasRole('admin')) {
             $worktimeEntries = WorktimeEntry::where(function($query) use($startedAt, $endedAt) {
                 $query->where([
@@ -49,10 +42,8 @@ class WorktimeEntriesController extends Controller
                     ]);
                 });
         }
-
-        return response([
-            'worktime_entries' => WorktimeEntryResource::collection($worktimeEntries->get())
-        ]);
+        return new WorktimeEntryCollection(
+            $worktimeEntries->paginate(30)->appends($request->query()));
     }
 
     /**

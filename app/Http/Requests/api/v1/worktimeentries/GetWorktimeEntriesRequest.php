@@ -4,6 +4,7 @@ namespace App\Http\Requests\api\v1\worktimeentries;
 
 use App\Rules\worktimeentries\DateRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Carbon;
 
 class GetWorktimeEntriesRequest extends FormRequest
 {
@@ -52,5 +53,18 @@ class GetWorktimeEntriesRequest extends FormRequest
         $data['ended_at'] = $this->query('ended_at');
 
         return $data;
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator){
+            $this->started_at = $this->started_at
+                ? Carbon::createFromFormat('Y-m-d', $this->started_at)->startOfDay()
+                : Carbon::now()->addDays(-14);
+
+            $this->ended_at = $this->ended_at
+                ? Carbon::createFromFormat('Y-m-d', $this->ended_at)->endOfDay()
+                : Carbon::now();
+        });
     }
 }

@@ -54,27 +54,68 @@ e.g. `?started_at=2020-01-01&ended_at=2020-01-02`
 validation rule: must be in 'Y-m-d' format
 defaults: started_at now, ended_at 14 days ago
 
-Returns array of work time entries:
+Returns work time entries paginated (page size 30):
 ```
 {
-    "worktime_entries": [
+    "data": [
         {
-            "id": 13,
-            "project_id": 5,
-            "started_at": "2020-10-05T21:23:25+00:00",
-            "ended_at": "2020-10-05T21:28:46+00:00",
+            "id": 21,
+            "project_id": 2,
+            "started_at": "2020-09-28T16:32:30+00:00",
+            "ended_at": "2020-09-28T18:05:04+00:00",
             "created_at": "2020-09-22T14:54:21+00:00",
             "updated_at": "2020-09-22T14:54:21+00:00"
         },
         {
-            "id": 14,
-            "project_id": 5,
-            "started_at": "2020-10-05T21:23:25+00:00",
-            "ended_at": "2020-10-05T21:28:46+00:00",
+            "id": 22,
+            "project_id": 2,
+            "started_at": "2020-09-29T18:07:04+00:00",
+            "ended_at": "2020-09-29T20:14:51+00:00",
             "created_at": "2020-09-22T14:54:21+00:00",
             "updated_at": "2020-09-22T14:54:21+00:00"
-        }
-    ]
+        },
+        {
+            "id": 23,
+            "project_id": 2,
+            "started_at": "2020-09-30T16:06:02+00:00",
+            "ended_at": "2020-09-30T22:28:43+00:00",
+            "created_at": "2020-09-22T14:54:21+00:00",
+            "updated_at": "2020-09-22T14:54:21+00:00"
+        },
+        ...
+    ],
+    "links": {
+        "first": "http://awesomeworktimetracker.test/api/v1/worktime-entries?page=1",
+        "last": "http://awesomeworktimetracker.test/api/v1/worktime-entries?page=1",
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+            {
+                "url": null,
+                "label": "Previous",
+                "active": false
+            },
+            {
+                "url": "http://awesomeworktimetracker.test/api/v1/worktime-entries?page=1",
+                "label": 1,
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next",
+                "active": false
+            }
+        ],
+        "path": "http://awesomeworktimetracker.test/api/v1/worktime-entries",
+        "per_page": 30,
+        "to": 12,
+        "total": 12
+    }
 }
 ```
 
