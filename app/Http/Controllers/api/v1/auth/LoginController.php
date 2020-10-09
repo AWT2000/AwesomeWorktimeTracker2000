@@ -4,7 +4,7 @@ namespace App\Http\Controllers\api\v1\auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\v1\LoginRequest;
-use App\Http\Resources\api\v1\users\UserResource;
+use App\Http\Resources\users\UserResource;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller

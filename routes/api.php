@@ -3,7 +3,7 @@
 use App\Http\Controllers\api\v1\auth\LoginController;
 use App\Http\Controllers\api\v1\projects\ProjectsController;
 use App\Http\Controllers\api\v1\worktimeentries\WorktimeEntriesController;
-use App\Http\Resources\api\v1\users\UserResource;
+use App\Http\Resources\users\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;

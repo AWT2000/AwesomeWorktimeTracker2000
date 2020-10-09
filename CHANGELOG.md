@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Update: update work time entry by id
   - Destroy: delete work time entry by id
 
+- Pagination for worktime entries
+
 ### Changed
 - Timestamps are accepted and returned in iso 8601 format
 
