@@ -25,18 +25,23 @@ class GetWorktimeEntriesRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'started_at' => [
                 'nullable',
                 'date',
-                'before_or_equal:ended_at',
             ],
             'ended_at' => [
                 'nullable',
                 'date',
-                'after_or_equal:started_at',
             ],
         ];
+
+        if ($this->started_at && $this->ended_at) {
+            $rules['started_at'][] = 'before_or_equal:ended_at';
+            $rules['ended_at'][] = 'after_or_equal:started_at';
+        }
+
+        return $rules;
     }
 
     /**
@@ -60,11 +65,15 @@ class GetWorktimeEntriesRequest extends FormRequest
         $validator->after(function ($validator){
             $this->started_at = $this->started_at
                 ? Carbon::createFromFormat('Y-m-d', $this->started_at)->startOfDay()
-                : Carbon::now()->addDays(-14);
+                : ($this->ended_at
+                    ? Carbon::createFromFormat('Y-m-d', $this->ended_at)->addDays(-14)
+                    : Carbon::now()->addDays(-14));
 
             $this->ended_at = $this->ended_at
                 ? Carbon::createFromFormat('Y-m-d', $this->ended_at)->endOfDay()
-                : Carbon::now();
+                : ($this->started_at
+                    ? $this->started_at->copy()->addDays(14)
+                    : Carbon::now());
         });
     }
 }
