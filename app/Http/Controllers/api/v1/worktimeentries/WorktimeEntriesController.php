@@ -23,8 +23,8 @@ class WorktimeEntriesController extends Controller
     {
         $user = $request->user();
 
-        $startedAt = $request->query('started_at', $request->started_at);
-        $endedAt = $request->query('ended_at', $request->ended_at);
+        $startedAt = $request->started_at;
+        $endedAt = $request->ended_at;
 
         if ($user->hasRole('admin')) {
             $worktimeEntries = WorktimeEntry::where(function($query) use($startedAt, $endedAt) {
