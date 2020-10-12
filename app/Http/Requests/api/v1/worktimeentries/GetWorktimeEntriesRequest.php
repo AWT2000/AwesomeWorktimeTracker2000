@@ -66,14 +66,16 @@ class GetWorktimeEntriesRequest extends FormRequest
             $this->started_at = $this->started_at
                 ? Carbon::createFromFormat('Y-m-d', $this->started_at)->startOfDay()
                 : ($this->ended_at
-                    ? Carbon::createFromFormat('Y-m-d', $this->ended_at)->addDays(-14)
-                    : Carbon::now()->addDays(-14));
+                    ? Carbon::createFromFormat('Y-m-d', $this->ended_at)
+                        ->addDays(-14)
+                        ->startOfDay()
+                    : Carbon::now()->addDays(-14)->startOfDay());
 
             $this->ended_at = $this->ended_at
                 ? Carbon::createFromFormat('Y-m-d', $this->ended_at)->endOfDay()
                 : ($this->started_at
-                    ? $this->started_at->copy()->addDays(14)
-                    : Carbon::now());
+                    ? $this->started_at->copy()->addDays(14)->endOfDay()
+                    : Carbon::now()->endOfDay());
         });
     }
 }

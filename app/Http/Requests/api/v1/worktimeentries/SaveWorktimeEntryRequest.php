@@ -71,8 +71,8 @@ class SaveWorktimeEntryRequest extends FormRequest
             if ($this->started_at && $this->ended_at) {
                 $entryBetweenDates = WorktimeEntry::where([
                     ['user_id', Auth::user()->id],
-                    ['started_at', '>=', Carbon::parse($this->started_at)],
-                    ['ended_at', '<=', Carbon::parse($this->ended_at)]
+                    ['started_at', '>=', Carbon::parse($this->started_at)->setTimezone('UTC')],
+                    ['ended_at', '<=', Carbon::parse($this->ended_at)->setTimezone('UTC')]
                 ]);
 
                 if ($this->id) {

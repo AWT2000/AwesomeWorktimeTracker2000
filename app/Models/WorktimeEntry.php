@@ -23,6 +23,8 @@ class WorktimeEntry extends Model
      */
     protected $fillable = ['user_id', 'project_id', 'started_at', 'ended_at'];
 
+    protected $dates = ['started_at', 'ended_at'];
+
     /**
      * The user that the entry belongs to.
      *

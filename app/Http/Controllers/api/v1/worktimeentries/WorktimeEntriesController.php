@@ -27,12 +27,13 @@ class WorktimeEntriesController extends Controller
         $endedAt = $request->ended_at;
 
         if ($user->hasRole('admin')) {
-            $worktimeEntries = WorktimeEntry::where(function($query) use($startedAt, $endedAt) {
-                $query->where([
-                    ['started_at', '>=', $startedAt],
-                    ['ended_at', '<=', $endedAt]
-                ]);
-            });
+            $worktimeEntries = WorktimeEntry::where(
+                function($query) use($startedAt, $endedAt) {
+                    $query->where([
+                        ['started_at', '>=', $startedAt],
+                        ['ended_at', '<=', $endedAt]
+                    ]);
+                });
         } else {
             $worktimeEntries = WorktimeEntry::where('user_id', $user->id)
                 ->where(function($query) use($startedAt, $endedAt) {
@@ -60,8 +61,10 @@ class WorktimeEntriesController extends Controller
             $request->validated(),
             [
                 'user_id' => $user->id,
-                'started_at' => Carbon::parse($request->validated()['started_at']),
-                'ended_at' => Carbon::parse($request->validated()['ended_at'])
+                'started_at' => Carbon::parse(
+                    $request->validated()['started_at'])->setTimezone('UTC'),
+                'ended_at' => Carbon::parse(
+                    $request->validated()['ended_at'])->setTimezone('UTC')
             ]
         ));
 
@@ -107,8 +110,10 @@ class WorktimeEntriesController extends Controller
             $request->validated(),
             [
                 'user_id' => Auth::user()->id,
-                'started_at' => Carbon::parse($request->validated()['started_at']),
-                'ended_at' => Carbon::parse($request->validated()['ended_at'])
+                'started_at' => Carbon::parse(
+                    $request->validated()['started_at'])->setTimezone('UTC'),
+                'ended_at' => Carbon::parse(
+                    $request->validated()['ended_at'])->setTimezone('UTC')
             ]
         ));
 

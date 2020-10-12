@@ -45,11 +45,11 @@ class DateRule implements Rule
 
         if ($attribute == 'started_at') {
             $collidingEntry = $this->getQueryForStartedAtAttributeValidation(
-                Carbon::parse($value),
+                Carbon::parse($value)->setTimezone('UTC'),
                 $collidingEntry);
         } else {
             $collidingEntry = $this->getQueryForEndedAtAttributeValidation(
-                Carbon::parse($value),
+                Carbon::parse($value)->setTimezone('UTC'),
                 $collidingEntry);
         }
         if (! empty($collidingEntry->first())) {
