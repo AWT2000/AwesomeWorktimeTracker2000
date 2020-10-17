@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 ### Added
+
+
+### Changed
+
+
+## [0.2.0]
+
+### Added
 - Tests for creating (#20)
 - Added action that attaches colliding entries when saved via web api (#20)
 - Pagination for worktime entries (#12)
