@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\api\v1\worktimeentries;
 
-use App\Rules\worktimeentries\DateRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Carbon;
 
@@ -60,6 +59,12 @@ class GetWorktimeEntriesRequest extends FormRequest
         return $data;
     }
 
+    /**
+     * Configure the validator instance.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
     public function withValidator($validator)
     {
         $validator->after(function ($validator){

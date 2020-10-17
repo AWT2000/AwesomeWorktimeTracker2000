@@ -63,6 +63,7 @@ Returns work time entries paginated (page size 30):
             "project_id": 2,
             "started_at": "2020-09-28T16:32:30+00:00",
             "ended_at": "2020-09-28T18:05:04+00:00",
+            "collides_with_other_entries": false,
             "created_at": "2020-09-22T14:54:21+00:00",
             "updated_at": "2020-09-22T14:54:21+00:00"
         },
@@ -71,6 +72,7 @@ Returns work time entries paginated (page size 30):
             "project_id": 2,
             "started_at": "2020-09-29T18:07:04+00:00",
             "ended_at": "2020-09-29T20:14:51+00:00",
+            "collides_with_other_entries": false,
             "created_at": "2020-09-22T14:54:21+00:00",
             "updated_at": "2020-09-22T14:54:21+00:00"
         },
@@ -79,6 +81,7 @@ Returns work time entries paginated (page size 30):
             "project_id": 2,
             "started_at": "2020-09-30T16:06:02+00:00",
             "ended_at": "2020-09-30T22:28:43+00:00",
+            "collides_with_other_entries": false,
             "created_at": "2020-09-22T14:54:21+00:00",
             "updated_at": "2020-09-22T14:54:21+00:00"
         },
@@ -136,6 +139,7 @@ Returns created work time entry:
     "project_id": 5,
     "started_at": "2020-10-05T21:23:25+00:00",
     "ended_at": "2020-10-05T21:28:46+00:00",
+    "collides_with_other_entries": false,
     "created_at": "2020-09-22T14:54:21+00:00",
     "updated_at": "2020-09-22T14:54:21+00:00"
 }
@@ -150,6 +154,7 @@ Returns:
     "project_id": 5,
     "started_at": "2020-10-05T21:23:25+00:00",
     "ended_at": "2020-10-05T21:28:46+00:00",
+    "collides_with_other_entries": false,
     "created_at": "2020-09-22T14:54:21+00:00",
     "updated_at": "2020-09-22T14:54:21+00:00"
 }
@@ -176,6 +181,7 @@ Returns updated work time entry:
     "project_id": 5,
     "started_at": "2020-10-05T21:23:25+00:00",
     "ended_at": "2020-10-05T21:28:46+00:00",
+    "collides_with_other_entries": false,
     "created_at": "2020-09-22T14:54:21+00:00",
     "updated_at": "2020-09-22T14:54:21+00:00"
 }
