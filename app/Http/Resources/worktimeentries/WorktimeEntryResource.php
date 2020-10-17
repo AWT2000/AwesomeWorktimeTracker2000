@@ -20,6 +20,8 @@ class WorktimeEntryResource extends JsonResource
             "project_id" => $this->project_id,
             "started_at" => Carbon::parse($this->started_at)->toIso8601String(),
             "ended_at" => Carbon::parse($this->ended_at)->toIso8601String(),
+            "collides_with_other_entries" => ($this->collidingEntries()->count() != 0
+                || $this->entriesCollidingWith()->count() != 0),
             "created_at" => Carbon::parse($this->created_at)->toIso8601String(),
             "updated_at" => Carbon::parse($this->updated_at)->toIso8601String(),
         ];

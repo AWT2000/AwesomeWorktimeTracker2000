@@ -26,6 +26,16 @@ class WorktimeEntry extends Model
     protected $dates = ['started_at', 'ended_at'];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'deleted_at',
+        'pivot'
+    ];
+
+    /**
      * The user that the entry belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -43,5 +53,37 @@ class WorktimeEntry extends Model
     public function project()
     {
         return $this->belongsTo(Project::class, 'project_id');
+    }
+
+    /**
+     * Colliding entries.
+     *
+     * (this entry -* other entries)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function collidingEntries()
+    {
+        return $this->belongsToMany(
+            WorktimeEntry::class,
+            'entry_collisions',
+            'worktime_entry_one_id',
+            'worktime_entry_two_id');
+    }
+
+    /**
+     * Entries that entry collides with.
+     *
+     * (other entries *- this entry)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function entriesCollidingWith()
+    {
+        return $this->belongsToMany(
+            WorktimeEntry::class,
+            'entry_collisions',
+            'worktime_entry_two_id',
+            'worktime_entry_one_id');
     }
 }

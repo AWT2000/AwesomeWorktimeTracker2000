@@ -26,10 +26,10 @@ class WorktimeEntryFactory extends Factory
     {
         $startedAt = $this->faker->dateTimeBetween('-8 hours', 'now');
         return [
-            'user_id' => User::factory()->make()->id,
+            'user_id' => User::factory(),
             'started_at' => $startedAt,
             'ended_at' => $this->faker->dateTimeBetween($startedAt, 'now'),
-            'project_id' => Project::factory()->make()->id
+            'project_id' => Project::factory()
         ];
     }
 }

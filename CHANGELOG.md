@@ -7,14 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 ### Added
-- API end points for work time entries
+- Tests for creating (#20)
+- Added action that attaches colliding entries when saved via web api (#20)
+- Pagination for worktime entries (#12)
+- API end points for work time entries (#1)
   - Update: update work time entry by id
   - Destroy: delete work time entry by id
 
-- Pagination for worktime entries
-
 ### Changed
-- Timestamps are accepted and returned in iso 8601 format
+- Timestamps are accepted and returned in iso 8601 format (#10)
+- Removed colliding validation logic from api(#20)
 
 ## [0.1.0]
 

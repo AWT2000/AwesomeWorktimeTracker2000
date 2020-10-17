@@ -25,8 +25,8 @@ class ProjectFactory extends Factory
     {
         return [
             'name' => implode(' ', $this->faker->words(2)) . ' -projekti',
-            'founder_id' => User::factory()->make()->id,
-            'project_manager_id' => User::factory()->make()->id
+            'founder_id' => User::factory(),
+            'project_manager_id' => User::factory()
         ];
     }
 }

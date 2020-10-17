@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1\worktimeentries;
 
+use App\Actions\AttachCollidingWorktimeEntriesAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\v1\worktimeentries\GetWorktimeEntriesRequest;
 use App\Http\Requests\api\v1\worktimeentries\SaveWorktimeEntryRequest;
@@ -68,6 +69,8 @@ class WorktimeEntriesController extends Controller
             ]
         ));
 
+        (new AttachCollidingWorktimeEntriesAction($worktimeEntry, $user->id))->execute();
+
         return response(WorktimeEntryResource::make($worktimeEntry));
     }
 
@@ -79,7 +82,7 @@ class WorktimeEntriesController extends Controller
      */
     public function show($id)
     {
-        $worktimeEntry = WorktimeEntry::find($id);
+        $worktimeEntry = WorktimeEntry::findOrFail($id);
 
         if ((empty($worktimeEntry) || $worktimeEntry->user_id != Auth::user()->id)
             && !Auth::user()->hasRole('admin'))
@@ -98,10 +101,12 @@ class WorktimeEntriesController extends Controller
      */
     public function update(SaveWorktimeEntryRequest $request, $id)
     {
-        $worktimeEntry = WorktimeEntry::find($id);
+        $worktimeEntry = WorktimeEntry::findOrFail($id);
 
-        if ((empty($worktimeEntry) || $worktimeEntry->user_id != Auth::user()->id)
-            && !Auth::user()->hasRole('admin'))
+        $user = Auth::user();
+
+        if ((empty($worktimeEntry) || $worktimeEntry->user_id != $user->id)
+            && !$user->hasRole('admin'))
         {
             return response()->json(['message' => 'Not Found.'], 404);
         }
@@ -109,7 +114,7 @@ class WorktimeEntriesController extends Controller
         $worktimeEntry->forceFill(array_merge(
             $request->validated(),
             [
-                'user_id' => Auth::user()->id,
+                'user_id' => $user->id,
                 'started_at' => Carbon::parse(
                     $request->validated()['started_at'])->setTimezone('UTC'),
                 'ended_at' => Carbon::parse(
@@ -118,6 +123,8 @@ class WorktimeEntriesController extends Controller
         ));
 
         $worktimeEntry->save();
+
+        (new AttachCollidingWorktimeEntriesAction($worktimeEntry, $user->id))->execute();
 
         return response(WorktimeEntryResource::make($worktimeEntry));
     }
@@ -130,13 +137,15 @@ class WorktimeEntriesController extends Controller
      */
     public function destroy($id)
     {
-        $worktimeEntry = WorktimeEntry::find($id);
+        $worktimeEntry = WorktimeEntry::findOrFail($id);
 
         if ((empty($worktimeEntry) || $worktimeEntry->user_id != Auth::user()->id)
             && !Auth::user()->hasRole('admin'))
         {
             return response()->json(['message' => 'Not Found.'], 404);
         }
+
+        $worktimeEntry->collidingEntries()->detach();
 
         $worktimeEntry->delete();
 
