@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\rfidclientapi\v1\UsersController as RfidClientUsersController;
 use App\Http\Controllers\api\v1\auth\LoginController;
 use App\Http\Controllers\api\v1\projects\ProjectsController;
 use App\Http\Controllers\api\v1\worktimeentries\WorktimeEntriesController;

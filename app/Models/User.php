@@ -65,7 +65,11 @@ class User extends Authenticatable
      */
     public function personalProjects()
     {
-        return $this->belongsToMany(Project::class, 'user_project', 'user_id', 'project_id');
+        return $this->belongsToMany(
+            Project::class,
+            'user_project',
+            'user_id',
+            'project_id');
     }
 
     /**
@@ -76,5 +80,31 @@ class User extends Authenticatable
     public function teamProjects()
     {
         return $this->hasManyThrough(Project::class, Team::class);
+    }
+
+    /**
+     * User's RFID tags
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function rfidTags()
+    {
+        return $this->belongsToMany(
+            RfidTag::class,
+            'user_rfid_tag',
+            'user_id',
+            'rfid_tag_id');
+    }
+
+    /**
+     * Worktime entries that has no ending
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function worktimeEntriesWithoutEnding()
+    {
+        return $this->hasMany(WorktimeEntry::class)
+            ->whereNull('ended_at')
+            ->orderBy('started_at', 'DESC');
     }
 }

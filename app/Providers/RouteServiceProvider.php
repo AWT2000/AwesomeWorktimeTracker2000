@@ -35,6 +35,10 @@ class RouteServiceProvider extends ServiceProvider
             Route::prefix('api/v1')
                 ->middleware('api')
                 ->group(base_path('routes/api.php'));
+
+            Route::prefix('api/rfidclientapi/v1')
+                ->middleware('api')
+                ->group(base_path('routes/rfidclientapi.php'));
         });
     }
 

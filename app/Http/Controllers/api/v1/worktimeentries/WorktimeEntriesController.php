@@ -40,6 +40,7 @@ class WorktimeEntriesController extends Controller
                 ->where(function($query) use($startedAt, $endedAt) {
                     $query->where([
                         ['started_at', '>=', $startedAt],
+                        ['ended_at', '!=', null],
                         ['ended_at', '<=', $endedAt]
                     ]);
                 });
