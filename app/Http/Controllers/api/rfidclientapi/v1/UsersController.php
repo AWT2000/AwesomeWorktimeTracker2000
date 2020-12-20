@@ -17,7 +17,7 @@ class UsersController extends Controller
             ->first();
 
         if (!$rfidTag) {
-            return response()->setStatusCode(422);
+            return response()->json(['message' => 'Not Found.'], 404);
         }
 
         if ($user = $rfidTag->users()->first()) {

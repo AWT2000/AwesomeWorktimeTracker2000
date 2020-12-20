@@ -80,8 +80,10 @@ class WorktimeEntryController extends Controller
                     'user_id' => $user->id,
                     'started_at' => Carbon::parse(
                         $request->validated()['started_at'])->setTimezone('UTC'),
-                    'ended_at' => Carbon::parse(
-                        $request->validated()['ended_at'])->setTimezone('UTC')
+                    'ended_at' => !empty($request->validated()['ended_at'])
+                        ? Carbon::parse(
+                            $request->validated()['ended_at'])->setTimezone('UTC')
+                        : null
                 ]
             ));
 
