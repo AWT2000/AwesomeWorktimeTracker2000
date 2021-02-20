@@ -1,6 +1,8 @@
 # AwesomeWorktimeTracker2000
 
-Laravel project for work time tracker app
+Laravel project for work time tracker app.
+
+Provides back end for Android App and for electronic time card (IoT project).
 
 ## API documentation:
 

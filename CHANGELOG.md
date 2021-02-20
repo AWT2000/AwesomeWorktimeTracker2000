@@ -8,23 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-
 ### Changed
 
-
-## [0.2.0]
-
-### Added
-- Tests for creating (#20)
-- Added action that attaches colliding entries when saved via web api (#20)
-- Pagination for worktime entries (#12)
-- API end points for work time entries (#1)
-  - Update: update work time entry by id
-  - Destroy: delete work time entry by id
-
-### Changed
-- Timestamps are accepted and returned in iso 8601 format (#10)
-- Removed colliding validation logic from api(#20)
+---
 
 ## [0.1.0]
 
@@ -54,3 +40,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Validation for work time entry index query
 - Validation for creating work time entries
 - Seeders for ACL, Superadmin and dummy data
+- Tests for creating (#20)
+- Added action that attaches colliding entries when saved via web api (#20)
+- Pagination for worktime entries (#12)
+- API end points for work time entries (#1)
+  - Update: update work time entry by id
+  - Destroy: delete work time entry by id
+- Added RFID tags for users, end points for IoT project client
+
+### Changed
+- Timestamps are accepted and returned in iso 8601 format (#10)
+- Removed colliding validation logic from api(#20)
